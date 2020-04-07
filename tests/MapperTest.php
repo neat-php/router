@@ -158,7 +158,7 @@ class MapperTest extends TestCase
         $this->assertSame(['test' => 'post'], $arguments);
         $matches->next();
         $this->assertSame('variadic', $matches->current()->getHandler());
-        $this->assertSame(['test' => 'post', 'admin' => ['firewall', 'post']], $arguments);
+        $this->assertSame(['admin' => ['firewall', 'post']], $arguments);
         $matches->next();
         $this->assertSame('arg', $matches->current()->getHandler());
         $this->assertSame(['admin', 'firewall', 'post'], $arguments);
