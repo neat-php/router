@@ -1,6 +1,6 @@
 {
-    "name": "neat/http-server",
-    "description": "Neat HTTP server components",
+    "name": "neat/router",
+    "description": "Neat Router components",
     "type": "library",
     "keywords": [
         "neat",
