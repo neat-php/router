@@ -90,7 +90,7 @@ class Mapper
     }
 
     /**
-     * @return callable
+     * @return callable|null
      */
     public function getHandler()
     {
