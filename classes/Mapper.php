@@ -200,15 +200,28 @@ class Mapper
     private function matchVariable(string $segment, array $segments, array &$arguments, array &$middleware): Generator
     {
         foreach ($this->variables as $variable) {
-            if ($variable->expression && !preg_match($variable->expression, $segment)) {
+            $matches = [];
+            if ($variable->expression && !preg_match($variable->expression, $segment, $matches)) {
                 continue;
             }
             foreach ($variable->matchSegments($segments, $arguments, $middleware) as $match) {
                 $arguments[$variable->name] = $segment;
+                foreach ($matches as $key => $value) {
+                    if (is_int($key)) {
+                        continue;
+                    }
+                    $arguments[$key] = $value;
+                }
                 array_splice($middleware, 0, 0, $variable->middleware);
 
                 yield $match;
                 unset($arguments[$variable->name]);
+                foreach ($matches as $key => $value) {
+                    if (is_int($key)) {
+                        continue;
+                    }
+                    unset($arguments[$key]);
+                }
             }
         }
     }

@@ -20,6 +20,7 @@ class MapperTest extends TestCase
         $mapper->map(['test'])->setHandler('test');
         $mapper->map(['test', '$id:\d+'])->setHandler('test-id-number');
         $mapper->map(['test', '$id:\w+'])->setHandler('test-id-word');
+        $mapper->map(['test', '$extension:test\.(?<ext>pdf|html)'])->setHandler('test-extension');
         $mapper->map(['arg', '*'])->setHandler('test-arg');
 
         return $mapper;
@@ -34,6 +35,8 @@ class MapperTest extends TestCase
         $this->assertSame(['id' => '5'], $parameters);
         $this->assertSame('test-id-word', $mapper->match(['test', 'hello'], $parameters)->current()->getHandler());
         $this->assertSame(['id' => 'hello'], $parameters);
+        $this->assertSame('test-extension', $mapper->match(['test', 'test.pdf'], $parameters)->current()->getHandler());
+        $this->assertSame(['extension' => 'test.pdf', 'ext' => 'pdf'], $parameters);
         $this->assertSame('test-arg', $mapper->match(['arg', 'bla', '5'], $parameters)->current()->getHandler());
         $this->assertSame(['bla', '5'], $parameters);
         $this->assertSame(
