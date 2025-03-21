@@ -146,7 +146,7 @@ class Mapper
      * @param array|null $middleware
      * @return Generator|static[]
      */
-    public function match(array $segments, array &$arguments = null, array &$middleware = null): Generator
+    public function match(array $segments, ?array &$arguments = null, ?array &$middleware = null): Generator
     {
         $arguments  = [];
         $middleware = $this->middleware;
